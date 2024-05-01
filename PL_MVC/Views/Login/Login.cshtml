@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="~/Content/Login.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "login" }))
+                {
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <input type="text" class="login__input" placeholder="Usuario / Email" name="email">
+                    </div>
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <input type="password" class="login__input" placeholder="Contraseña" name="password">
+                    </div>
+                    <button class="button login__submit">
+                        <span class="button__text">Iniciar Sesión</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                }
+                <div class="social-login">
+                    <h3 class="recuperar"><a href="#modalRecuperar" rel="modal:open">¿Has olvidado tu contraseña?</a></h3>
+                </div>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalRecuperar" class="modal">
+        <div class="login__field">
+            <i class="login__icon fas fa-user"></i>
+            <input class="login__input input-w100" placeholder="Escribe tu email" id="email" />
+        </div>
+        <div class="modal-contianer-buttons">
+            <a href="#" rel="modal:close" id="closeModal" style="display: none;">Close</a>
+            <button type="button" id="enviarCorreo" class="button login__submit justify-content-center"><center>Recuperar</center></button>
+            <a href="#advertencia" rel="modal:open" style="display: none;">Mensaje</a>
+
+        </div>
+    </div>
+
+    <div id="advertencia" class="modal">
+        <p class="text-danger-title" id="titleAdvertencia"></p>
+        <p class="text-info" id="mensajeAdvertencia"></p>
+        <a href="#" rel="modal:close" id="closeModal" class="button login__submit justify-content-center">Ok!</a>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#enviarCorreo').on("click", function () {
+                $.ajax({
+                    url: '@Url.Action("Recuperar")',
+                    type: 'POST',
+                    data: { email: $('#email').val() },
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.Item1) {
+                            $('#closeModal').click();
+                            $('#email').val('');
+
+                            $('#titleAdvertencia').text('¡Correo enviado!');
+                            $('#mensajeAdvertencia').text('Te hemos enviado un mensaje a tu email con las instrucciones para recuperar tu contraseña.');
+                            $('#advertencia').modal();
+                        } else {
+                            $('#closeModal').click();
+
+                            $('#titleAdvertencia').text('¡Correo inválido!');
+                            $('#mensajeAdvertencia').text('El correo proporcionado no cuenta con un registro en nuestro sistema.');
+                            $('#advertencia').modal();
+                        }
+                    },
+                    error: function (result) {
+                        console.log(result);
+                    }
+                });
+            })
+        });
+        //Aquí me quede
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿@model ML.Rol
+@{
+    ViewBag.Title = "Agregar Rol";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container p-5 pt-0">
+    <h1>Registro de rol</h1>
+    <div class="row g-3">
+        <div class="col-12 col-lg-6">
+            @Html.HiddenFor(model => model.IdRol)
+            @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="col-12 d-grid gap-2 d-flex justify-content-center mt-5">
+        <button type="submit" class="btn btn-lg btn-outline-success">GUARDAR</button>
+    </div>
+</div>

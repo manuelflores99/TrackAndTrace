@@ -1,0 +1,72 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "ReestablecerContrasenia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container p-3">
+    <div class="row align-items-center justify-content-center">
+        <div class="col-8 col-md-6 col-lg-4 rounded p-5 shadow">
+
+            <div class="page-header">
+                <h2 class="specialHead">Reestablecer contraseña</h2>
+            </div>
+            @using (Html.BeginForm("Restablecer", "Login", FormMethod.Post))
+            {
+                @Html.HiddenFor(model => model.Email)
+                <div class="form-group">
+
+                    @Html.LabelFor(model => model.Password, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
+                    <br />
+                    <label for="form-label">Repite la contraseña</label>
+                    <input type="password" onkeyup="equalsPassword(this, 'lblRetypePassword')" name="retypePassword" id="retypePassword" class="form-control"><br>
+                    <label id="lblRetypePassword"></label>
+                    <button type="submit" class="btn btn-block span btn-outline-success text-center"> <span class="glyphicon glyphicon-ok"></span> Cambiar Contraseña</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+    function password(input, label) {
+        let regex = /^(?=.*[0-9])(?=.*[!@@#$%^&*])[a-zA-Z0-9!@@#$%^&*]{8,8}$/;
+        var letra = $(input).val();
+        if (letra.length > 0) {
+            if (regex.test(letra)) {
+                $(input).removeClass("is-invalid");
+                $(input).addClass("is-valid");
+                $('#' + label).text('');
+            }
+            else {
+                $(input).removeClass("is-valid");
+                $(input).addClass("is-invalid");
+                $('#' + label).text('Contraseña inválida (8 caracteres y debe contener al menos una letra minúscula, una letra mayúscula, un número y un caracter especial)');
+            }
+        }
+        else {
+            $(input).removeClass("is-invalid");
+            $(input).removeClass("is-valid");
+            $('#' + label).text('');
+        }
+    }
+    function equalsPassword(input, label) {
+        if ($(input).length > 0) {
+            if ($(input).val() === $('#Password').val()) {
+                $(input).removeClass('is-invalid');
+                $(input).addClass('is-valid');
+                $('#' + label).text('');
+            }
+            else {
+                $(input).removeClass('is-valid');
+                $(input).addClass('is-invalid');
+                $('#' + label).text('Las contraseñas no coinciden');
+            }
+        } else {
+            $(input).removeClass('is-valid');
+            $(input).removeClass('is-invalid');
+            $('#' + label).text('');
+        }
+    }
+</script>

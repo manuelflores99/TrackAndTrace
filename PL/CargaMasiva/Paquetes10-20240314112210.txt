@@ -1,0 +1,11 @@
+InstruccionEntrega|Peso|DireccionOrigen|DireccionEntrega|FechaEstimadaEntrega|NumeroGuia
+Entregar al portero|2|Estado de México|Ciudad de México|2024-03-15|AGJHHR451223
+Recibe encargado de tienda|2.4|Monterrey|Guerrero|2024-04-01|FJSKLI549865
+Dejar dentro del patio|10.5|Guadalajara|Estado de México|2024-04-30|BGHNSQ155498
+Entregar al policia|2|Puebla|Ciudad de México|2024-04-15|AGJHHR451224
+Recibe encargado de departamento|4|Cancun|Guerrero|2024-05-01|FJSKLI549866
+Dejar fuera del edificio|0.2|Estado de México|Estado de México|2024-04-12|BGHNSQ155499
+Pasar a recepción|6|Ciudad de México|Ciudad de México|2024-04-17|AGJHHR451225
+Llamar por telefono|150.7|México|Estado de México|2024-05-01|FJSKLI549867
+Colocar pedido en la nevera|130|Estado de México|Veracruz|2024-05-01|BGHNSQ155500
+Cuidado con el perro|7|Nuevo León, Monterrey|Ciudad de México|2024-05-02|AGJHHR451226

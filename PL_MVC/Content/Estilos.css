@@ -1,0 +1,38 @@
+﻿.bg-home {
+    background: linear-gradient(90deg, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+}
+.logout {
+    color: #000 !important;
+    font-weight: bold !important;
+    border-radius: 50% !important;
+    padding: 10px !important;
+}
+    .logout:hover {
+        color: #fff !important;
+        background-color: #051937 !important;
+    }
+.bg-table {
+    background: #008793 !important;
+    color: #fff !important;
+}
+.column-lg {
+    width: 200px !important;
+    overflow: auto;
+}
+.invalido {
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}
+@media (max-width: 575px) {
+    .logout {
+        color: rgba(255, 255, 255, 0.55) !important;
+        font-weight: normal !important;
+        padding: 0 !important;
+        border-radius: 0% !important;
+    }
+        .logout:hover {
+            color: rgba(255, 255, 255, 0.75) !important;
+            background-color: transparent !important;
+        }
+}

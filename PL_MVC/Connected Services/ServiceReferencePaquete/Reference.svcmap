@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="af4db731-a5ee-4220-8960-b16e8f501b77" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:61834/Paquete.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Paquete.xsd" MetadataType="Schema" ID="d437126b-f41e-46df-b1ba-4aea1318d1fc" SourceId="1" SourceUrl="http://localhost:61834/Paquete.svc?xsd=xsd3" />
+    <MetadataFile FileName="Paquete1.xsd" MetadataType="Schema" ID="32a4986b-83de-4df1-9b43-bc63d2d18692" SourceId="1" SourceUrl="http://localhost:61834/Paquete.svc?xsd=xsd2" />
+    <MetadataFile FileName="Paquete2.xsd" MetadataType="Schema" ID="73b74145-cf08-4e97-b60b-75ba75b1bb35" SourceId="1" SourceUrl="http://localhost:61834/Paquete.svc?xsd=xsd1" />
+    <MetadataFile FileName="Paquete3.xsd" MetadataType="Schema" ID="4a2ec28d-767a-4765-854f-9a4cc597d18a" SourceId="1" SourceUrl="http://localhost:61834/Paquete.svc?xsd=xsd0" />
+    <MetadataFile FileName="Paquete.wsdl" MetadataType="Wsdl" ID="e5af7407-d707-4eeb-bc94-050fd56ae487" SourceId="1" SourceUrl="http://localhost:61834/Paquete.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

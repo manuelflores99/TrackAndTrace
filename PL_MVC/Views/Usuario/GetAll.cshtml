@@ -1,0 +1,168 @@
+﻿@model ML.Usuario
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-between mt-3">
+    <h1>Usuarios</h1>
+    <button class="btn btn-outline-success" onclick="location.href='@Url.Action("Form", "Usuario")'"><i class="bi bi-plus-circle"></i> Crear usuario</button>
+</div>
+<div class="d-flex">
+    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class="bi bi-funnel"></i> Filtrar
+    </button>
+</div>
+<div class="collapse mt-3" id="collapseExample">
+    <div class="card card-body">
+        @using (Html.BeginForm("GetAll", "Usuario", FormMethod.Post, new { @id = "form" }))
+        {
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+                </div>
+                <div class="col-12 col-md-4">
+                    @Html.LabelFor(model => model.ApellidoPaterno, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.ApellidoPaterno, new { @class = "form-control" })
+                </div>
+                <div class="col-12 col-md-4">
+                    @Html.LabelFor(model => model.ApellidoMaterno, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.ApellidoMaterno, new { @class = "form-control" })
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button type="button" id="limpiarFormulario" class="btn btn-outline-secondary me-2">Limpiar</button>
+                    <button type="submit" class="btn btn-outline-info"><i class="bi bi-search"></i> Buscar</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped mt-3">
+        <thead>
+            <tr class="text-center bg-table">
+                <th>Estatus</th>
+                <th>Foto</th>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Apellido Paterno</th>
+                <th>Apellido Materno</th>
+                <th>Email</th>
+                <th>Sexo</th>
+                <th>Teléfono</th>
+                <th>Celular</th>
+                <th>Fecha de Nacimiento</th>
+                <th>CURP</th>
+                <th class="column-lg">Dirección</th>
+                <th>Rol</th>
+                <th colspan="2">Operaciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Usuarios != null)
+            {
+                foreach (ML.Usuario usuario in Model.Usuarios)
+                {
+                    <tr class="text-center">
+                        <td>
+                            <div class="form-check form-switch">
+                                @if (usuario.Estatus)
+                                {
+                                    <input class="form-check-input" type="checkbox" role="switch" id="estatus" onclick="CambiarEstatus('@usuario.IdUsuario', this)" checked>
+                                }
+                                else
+                                {
+                                    <input class="form-check-input" type="checkbox" role="switch" id="estatus" onclick="CambiarEstatus('@usuario.IdUsuario', this)">
+                                }
+                            </div>
+                        </td>
+                        <td>
+                            @if (usuario.Imagen != null)
+                            {
+                                <img src="data:image/*;base64,@usuario.Imagen" class="rounded-circle" style="width: 100px; height: 100px" />
+                            }
+                            else
+                            {
+                                <img src="https://cdn-icons-png.flaticon.com/512/6073/6073873.png" class="rounded-circle" style="width: 100px; height: 100px" />
+                            }
+                        </td>
+                        <td>@usuario.UserName</td>
+                        <td>@usuario.Nombre</td>
+                        <td>@usuario.ApellidoPaterno</td>
+                        <td>@usuario.ApellidoMaterno</td>
+                        <td>@usuario.Email</td>
+                        <td>
+                            @if (usuario.Sexo == "H ")
+                            {
+                                <span>Hombre</span>
+                            }
+                            else
+                            {
+                                <span>Mujer</span>
+                            }
+                        </td>
+                        <td>@usuario.Telefono</td>
+                        <td>@usuario.Celular</td>
+                        <td>@usuario.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                        <td>@usuario.CURP</td>
+                        <td class="class=" column-lg"">
+                            @usuario.Direccion.Calle  @usuario.Direccion.NumeroExterior @usuario.Direccion.NumeroInterior,
+                            @usuario.Direccion.Colonia.Nombre, @usuario.Direccion.Colonia.CodigoPostal @usuario.Direccion.Colonia.Municipio.Nombre,
+                            @usuario.Direccion.Colonia.Municipio.Estado.Nombre. @usuario.Direccion.Colonia.Municipio.Estado.Pais.Nombre.
+                        </td>
+                        <td>@usuario.Rol.Nombre</td>
+                        <td>
+                            <a href="@Url.Action("Form","Usuario", new { idUsuario = usuario.IdUsuario })">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil text-info" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                                </svg>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete", "Usuario", new { idUsuario = usuario.IdUsuario, idDireccion = usuario.Direccion.IdDireccion })" onclick="return confirm('¿Estás seguro de eliminar el registro de forma permanente?')">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash text-danger" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="15" class="text-center py-5">NO HAY DATOS</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+    function CambiarEstatus(usuario, input) {
+        var valor = input.checked;
+        $.ajax({
+            url: '@Url.Action("CambiarEstatus")',
+            type: 'POST',
+            dataType: 'JSON',
+            data: { idUsuario: usuario, estatus: valor },
+            success: function (result) {
+                if (!result.Item1) {
+                    alert("Error: " + result.Item2);
+                }
+            },
+            error: function (error) {
+                alert("Fallo petición");
+            }
+        });
+    }
+    $('#limpiarFormulario').on('click', function () {
+        var indices = $('#form')[0].length;
+        for (var i = 0; i < indices-2; i++) {
+            $('#' + $('#form')[0][i].attributes.id.nodeValue).val("");
+        }
+        //$('#' + $('#form')[0][0].attributes[1].nodeValue).val("")
+    });
+</script>

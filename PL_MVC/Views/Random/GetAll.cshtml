@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="coontainer">
+    <div class="col text-center">
+        <p class="h1">Usuarios Random</p>
+        <hr />
+    </div>
+    <div class="col text-end">
+        <button class="btn btn-success" onclick="AgregarUsuario()">Añadir usuario</button>
+    </div>
+    <div class="table-responsive mt-3">
+        <table class="table">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo electrónico</th>
+                    <th>Género</th>
+                    <th>Edad</th>
+                    <th>Dirección</th>
+                    <th>Foto</th>
+                </tr>
+            </thead>
+            <tbody id="usuarios">
+            </tbody>
+        </table>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    function AgregarUsuario() {
+        $.ajax({
+            url: 'https://randomuser.me/api',
+            type: 'GET',
+            datatype: 'JSON',
+
+            success: function (results) {
+                console.log(results);
+                var fila = '<tr>'
+                    + '<td>' + results.results[0].name.first + '</td>'
+                    + '<td>' + results.results[0].email + ' ' + results.results[0].email + '</td>'
+                    + '<td>' + results.results[0].gender + '</td>'
+                    + '<td>' + results.results[0].dob.age + '</td>'
+                    + '<td>' + results.results[0].location.street.name + results.results[0].location.city + ', '
+                    + results.results[0].location.street.name + '</td>'
+                    + '<td><img class="rounded-circle" src="' + results.results[0].picture.thumbnail + '" /></td>'
+                    + '</tr>';
+                $("#usuarios").append(fila);
+            },
+            error: function (error) {
+
+            }
+        });
+    }
+</script>

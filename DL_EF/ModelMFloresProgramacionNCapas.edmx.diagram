@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="942bc276165e4194a48327bf0c9c4f67" Name="Diagram1">
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Rol" Width="1.5" PointX="0.75" PointY="2.125" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Estado" Width="1.625" PointX="7.5" PointY="1.25" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Municipio" Width="1.625" PointX="9.75" PointY="1.25" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Municipio__IdEst__3E52440B" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Pai" Width="1.5" PointX="5.25" PointY="1.5" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Estado__IdPais__3B75D760" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Direccion" Width="1.5" PointX="14.375" PointY="1.75" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Colonia" Width="1.5" PointX="12.125" PointY="1.125" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Colonia__IdMunic__412EB0B6" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Direccion__IdCol__440B1D61" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.EstatusTransporte" Width="1.5" PointX="5.375" PointY="5.375" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Transporte" Width="1.5" PointX="7.625" PointY="5" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Usuario" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Direccion__IdUsu__44FF419A" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Usuario__IdRol__34C8D9D1" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Paquete" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Repartidor" Width="1.5" PointX="3.375" PointY="7.75" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Asistencia" Width="1.5" PointX="7.625" PointY="9" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.EstatusAsistencia" Width="1.5" PointX="5.375" PointY="9.375" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Asistenci__IdEst__208CD6FA" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

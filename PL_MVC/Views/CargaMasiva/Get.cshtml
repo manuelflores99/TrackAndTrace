@@ -1,0 +1,102 @@
+﻿@model ML.ResultExcel
+@{
+    ViewBag.Title = "Get";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Carga Masiva</h2>
+<hr class="mb-3" />
+<div class="row text-center justify-content-around">
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="border border-primary p-2 shadow rounded">
+            <p class="h3">TXT</p>
+            <button class="btn btn-outline-success btn-lg mt-3" id="btnIniciarTXT">Iniciar</button>
+            @using (Html.BeginForm("CargaTXT", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data", @class = "mt-3", @id = "formTXT", @style = "display: none;" }))
+            {
+                <div class="card p-2">
+                    <input type="file" name="fileTXT" id="fileTXT" class="form-control" />
+                    <button type="submit" class="btn btn-outline-warning mt-3 btn-lg">SUBIR</button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="border border-success p-2 shadow rounded">
+            <p class="h3">EXCEL</p>
+            <button class="btn btn-outline-success btn-lg mt-3" id="btnIniciarExcel">Iniciar</button>
+            @using (Html.BeginForm("Get", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data", @class = "mt-3", @id = "formExcel", @style = "display: none;" }))
+            {
+
+
+                <div class="card p-2">
+
+
+                    @if (Model.Errores != null && Model.Errores.Count == 0)
+                    {
+                        <input type="file" name="archivo" id="fileExcel" class="form-control" disabled/>
+                        <button type="submit" class="btn btn-outline-warning mt-3 btn-lg">GUARDAR</button>
+                    }
+                    else
+                    {
+                        <input type="file" name="archivo" id="fileExcel" class="form-control" />
+                        <button type="submit" class="btn btn-outline-warning mt-3 btn-lg">VALIDAR</button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    @if (Model.Errores != null && Model.Errores.Count > 0)
+    {
+        <div class="col-12 mt-5">
+            <div class="table-responsive">
+                <table class="table table-warning text-center">
+                    <thead>
+                        <tr>
+                            <th>Número de fila</th>
+                            <th>Error</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-start">
+                        @foreach (ML.ResultExcel error in Model.Errores)
+                        {
+                            <tr>
+                                <td>@error.IdFila</td>
+                                <td>@error.Mensaje</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $('#btnIniciarTXT').on("click", function () {
+        $('#formExcel').hide();
+        console.log($('#formTXT').hasClass('open'));
+        if ($('#formTXT').hasClass('open')) {
+            $('#formTXT').removeClass('open');
+            $('#formTXT').hide();
+        }
+        else {
+            $('#formTXT').addClass('open');
+            $('#formTXT').show();
+
+        }
+    });
+
+    $('#btnIniciarExcel').on("click", function () {
+        $('#formTXT').hide();
+        if ($('#formExcel').hasClass('open')) {
+            $('#formExcel').removeClass('open');
+            $('#formExcel').hide();
+        }
+        else {
+            $('#formExcel').addClass('open');
+            $('#formExcel').show();
+
+        }
+    });
+</script>

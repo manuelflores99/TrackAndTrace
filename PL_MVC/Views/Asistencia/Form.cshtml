@@ -1,0 +1,50 @@
+﻿@model ML.Asistencia
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>¿Necesitas ayuda?</h2>
+
+@using (Html.BeginForm("Form", "Asistencia", FormMethod.Post))
+{
+    <div class="row mt-5">
+        <div class="col text-center align-content-center">
+            <img src="~/Content/img/pexels-mart-production-7709299.jpg" class="rounded-5 shadow-lg" style="width: 26rem;" />
+        </div>
+        <div class="col-12 col-lg-6 mt-3">
+            <div class="row">
+                <div class="col-12">
+                    <p class="h2">¡Solicita asistencia!</p>
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+
+                    <label id="lblEmail" class="invalido">
+                        @Html.ValidationMessageFor(model => model.Email)
+                    </label>
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(model => model.Titulo, new { @class = "form-label" })
+                    @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control" })
+
+                    <label id="lblTitulo" class="invalido">
+                        @Html.ValidationMessageFor(model => model.Titulo)
+                    </label>
+                </div>
+                <div class="col-12">
+                    @Html.LabelFor(model => model.Mensaje, new { @class = "form-label" })
+                    @Html.TextAreaFor(model => model.Mensaje, new { @class = "form-control" })
+
+                    <label id="lblMensaje" class="invalido">
+                        @Html.ValidationMessageFor(model => model.Mensaje)
+                    </label>
+                </div>
+                <div class="col-12 text-center mt-3">
+                    <button type="submit" class="btn btn-outline-success">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

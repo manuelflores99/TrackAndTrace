@@ -1,0 +1,42 @@
+﻿@model ML.Repartidor
+@{
+    ViewBag.Title = "Asignar paquete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <p class="text-success h1">#@ViewBag.NumeroGuia</p>
+</div>
+
+@if (Model.Repartidores != null)
+{
+    <div class="table-responsive">
+        <table class="table table-light text-center"
+               >
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ML.Repartidor repartidor in Model.Repartidores)
+                {
+                    <tr>
+                        <td>@repartidor.Nombre</td>
+                        <td>@repartidor.ApellidoPaterno</td>
+                        <td>@repartidor.ApellidoPaterno</td>
+                        <td><a href="@Url.Action("AddToSession", "Asignacion", new { idPaquete = ViewData["idPaquete"], idRepartidor = repartidor.IdRepartidor })" class="btn btn-outline-success">Asignar</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        <span class="m-5">NO HAY REPARTIDORES</span> <a href="#" class="btn btn-outline-success">Registrar repartidores</a>
+    </div>
+}

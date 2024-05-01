@@ -1,0 +1,122 @@
+﻿@model ML.Paquete
+@{
+    ViewBag.Title = "Formulario paquete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Form", "Paquete", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    <div class="row mt-3">
+        <div class="col-12">
+            <button type="button" onclick="location.href='@Url.Action("GetAll", "Paquete")'" class="">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-return-left text-primary" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5" />
+                </svg>
+            </button>
+            <span class="h1 ml-5">Registro de paquete</span>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-12">
+            @Html.HiddenFor(model => model.IdPaquete)
+
+            @Html.LabelFor(model => model.InstruccionEntrega, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.InstruccionEntrega, new { @class = "form-control", @onkeyup = "soloLetras(this, 'lblInstruccionEntrega')" })
+            <label id="lblInstruccionEntrega" class="invalido">
+                @Html.ValidationMessageFor(model => model.InstruccionEntrega)
+            </label>
+        </div>
+        <div class="col-12 col-lg-4">
+            @Html.LabelFor(model => model.Peso, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.Peso, new { @class = "form-control", @onkeyup = "soloDecimales(this, 'lblPeso')" })
+            <label id="lblPeso" class="invalido">
+                @Html.ValidationMessageFor(model => model.Peso)
+            </label>
+        </div>
+        <div class="col-12 col-lg-4">
+            @Html.LabelFor(model => model.FechaEstimadaEntrega, new { @class = "form-label" })
+            @if (Model.IdPaquete != 0)
+            {
+                @Html.TextBoxFor(model => model.FechaEstimadaEntrega, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+            }
+            else
+            {
+                @Html.TextBoxFor(model => model.FechaEstimadaEntrega, new { @class = "form-control", @type = "date" })
+            }
+            <label id="lblFechaEstimadaEntrega" class="invalido">
+                @Html.ValidationMessageFor(model => model.FechaEstimadaEntrega)
+            </label>
+        </div>
+        <div class="col-12 col-lg-4">
+            @Html.LabelFor(model => model.NumeroGuia, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.NumeroGuia, new { @class = "form-control" })
+            <label id="lblNumeroGuia" class="invalido">
+                @Html.ValidationMessageFor(model => model.NumeroGuia)
+            </label>
+        </div>
+        <div class="col-12">
+            @Html.LabelFor(model => model.DireccionOrigen, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.DireccionOrigen, new { @class = "form-control" })
+            <label id="lblDireccionOrigen" class="invalido">
+                @Html.ValidationMessageFor(model => model.DireccionOrigen)
+            </label>
+        </div>
+        <div class="col-12">
+            @Html.LabelFor(model => model.DireccionEntrega, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.DireccionEntrega, new { @class = "form-control" })
+            <label id="lblDireccionEntrega" class="invalido">
+                @Html.ValidationMessageFor(model => model.DireccionEntrega)
+            </label>
+        </div>
+        <div class="col-12 mt-3 text-center">
+            <button type="submit" class="btn btn-outline-success">GUARDAR</button>
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/jquery")
+<script>
+    function soloLetras(input, label) {
+        let regex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/
+        var valor = $(input).val();
+        if (valor.length > 0) {
+            if (regex.test(valor)) {
+                $(input).removeClass('is-invalid');
+                $(input).addClass('is-valid');
+                $('#' + label).text('');
+            }
+            else {
+                $(input).removeClass('is-valid');
+                $(input).addClass('is-invalid');
+                $(input).val(valor.slice(0, -1));
+                $('#' + label).text('Solo se permiten letras');
+            }
+        }
+        else {
+            $(input).removeClass('is-valid');
+            $(input).removeClass('is-invalid');
+            $('#' + label).text('');
+        }
+    }
+    function soloDecimales(input, label) {
+        let regex = /^[0-9]+([.])?([0-9]+)?$/;
+        var valor = $(input).val();
+        if (valor.length > 0) {
+            if (regex.test(valor)) {
+                $(input).removeClass('is-invalid');
+                $(input).addClass('is-valid');
+                $('#' + label).text('');
+            } else {
+                $(input).removeClass('is-valid');
+                $(input).addClass('is-invalid');
+                $('#' + label).text('Solo se permiten números');
+                $(input).val(valor.slice(0, -1));
+            }
+        }
+        else {
+            $(input).removeClass('is-valid');
+            $(input).removeClass('is-invalid');
+            $('#' + label).text('');
+        }
+    }
+</script>
