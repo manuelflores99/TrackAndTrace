@@ -16,8 +16,6 @@
         <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Colonia__IdMunic__412EB0B6" />
         <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Direccion__IdCol__440B1D61" />
         <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.EstatusTransporte" Width="1.5" PointX="5.375" PointY="5.375" />
-        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Transporte" Width="1.5" PointX="7.625" PointY="5" />
-        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D" />
         <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Usuario" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Direccion__IdUsu__44FF419A" />
         <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Usuario__IdRol__34C8D9D1" />
@@ -26,6 +24,9 @@
         <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Asistencia" Width="1.5" PointX="7.625" PointY="9" />
         <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.EstatusAsistencia" Width="1.5" PointX="5.375" PointY="9.375" />
         <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Asistenci__IdEst__208CD6FA" />
+        <EntityTypeShape EntityType="MFloresProgramacionNCapasModel.Transporte" Width="1.5" PointX="7.625" PointY="5.125" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D" />
+        <AssociationConnector Association="MFloresProgramacionNCapasModel.FK__Transport__IdRep__2739D489" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

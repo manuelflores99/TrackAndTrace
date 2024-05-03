@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL_MVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -87,6 +88,28 @@ namespace PL_MVC.Controllers
                 ViewBag.Message = "Error: " + result.Item2;
             }
             return PartialView("Modal");
+        }
+
+        //AssignRepartidor
+        [HttpGet]
+        public JsonResult getRepartidores()
+        {
+            var result = BL.Transporte.GetRepartidoresWithAsignaciones();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult SaveAssign(int idTransporte, int idRepartidor)
+        {
+            Result result = new Result();
+
+            var exe = BL.Transporte.SaveAssign(idTransporte, idRepartidor);
+
+            result.Success = exe.Success;
+            result.Message = exe.Message;
+            result.Error = exe.Error;
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -10,22 +10,13 @@
 namespace DL_EF
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Repartidor
+    public partial class GetRepartidoresWithAsignaciones_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Repartidor()
-        {
-            this.Transportes = new HashSet<Transporte>();
-        }
-    
         public int IdRepartidor { get; set; }
         public string Nombre { get; set; }
         public string ApellidoPaterno { get; set; }
         public string ApellidoMaterno { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Transporte> Transportes { get; set; }
+        public Nullable<int> Asignaciones { get; set; }
     }
 }

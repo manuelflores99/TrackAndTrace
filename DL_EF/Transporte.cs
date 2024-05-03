@@ -20,7 +20,9 @@ namespace DL_EF
         public string Marca { get; set; }
         public System.DateTime AnioFabricacion { get; set; }
         public int IdEstatusTransporte { get; set; }
+        public Nullable<int> IdRepartidor { get; set; }
     
         public virtual EstatusTransporte EstatusTransporte { get; set; }
+        public virtual Repartidor Repartidor { get; set; }
     }
 }

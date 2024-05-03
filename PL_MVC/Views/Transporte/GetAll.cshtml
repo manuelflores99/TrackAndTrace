@@ -7,53 +7,143 @@
     <h1>Transportes</h1>
     <button class="btn btn-outline-success" onclick="location.href='@Url.Action("Form", "Transporte")'"><i class="bi bi-plus-circle"></i> Crear transporte</button>
 </div>
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Número de placa</th>
-                <th>Modelo</th>
-                <th>Marca</th>
-                <th>Año de Fabricación</th>
-                <th>Estatus</th>
-                <th colspan="2">Operaciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model.Transportes.Count > 0)
-            {
-                foreach (ML.Transporte transporte in Model.Transportes)
-                {
-                    <tr>
-                        <td>@transporte.NumeroPlaca</td>
-                        <td>@transporte.Modelo</td>
-                        <td>@transporte.Marca</td>
-                        <td>@transporte.AnioFabricacion</td>
-                        <td>@transporte.Estatus.Estatus</td>
-                        <td>
-                            <a href="@Url.Action("Form","Transporte", new { idTransporte = transporte.IdTransporte })">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil text-info" viewBox="0 0 16 16">
-                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                                </svg>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Delete", "Transporte", new { idTransporte = transporte.IdTransporte })" onclick="return confirm('¿Estás seguro de eliminar el registro de forma permanente?')">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash text-danger" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                                </svg>
-                            </a>
-                        </td>
-                    </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="7" class="text-center">NO HAY DATOS</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+
+@if (Model.Transportes != null && Model.Transportes.Count > 0)
+{
+    <div class="row pt-3">
+        @foreach (ML.Transporte transporte in Model.Transportes)
+        {
+            <div class="col-11 col-md-4 col-lg-3 d-flex align-items-stretch">
+                <div class="card w-100">
+                    <img src="https://static.vecteezy.com/system/resources/previews/024/830/732/large_2x/delivery-truck-with-parcel-box-transport-vehicle-3d-rendering-free-png.png" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">@transporte.Modelo <span class="text-reset fw-normal fst-italic small">(@transporte.Marca)</span></h5>
+                        <p class="card-text">@transporte.NumeroPlaca (<span class="fst-italic">@transporte.AnioFabricacion.ToString("yyyy")</span>)</p>
+                        <div class="text-center">
+                            <p class=" text-center">
+                                <div class="badge text-bg-success text-wrap">
+                                    @transporte.Estatus.Estatus
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="card-footer d-flex justify-content-around">
+                        <a href="@Url.Action("Form","Transporte", new { idTransporte = transporte.IdTransporte })">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-pencil text-info" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
+                            </svg>
+                        </a>
+
+                        <a href="@Url.Action("Delete", "Transporte", new { idTransporte = transporte.IdTransporte })" onclick="return confirm('¿Estás seguro de eliminar el registro de forma permanente?')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-trash text-danger" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                            </svg>
+                        </a>
+                        <div class="text-center" id="@("transporteNumero" + transporte.IdTransporte)">
+                            @if (transporte.Repartidor.IdRepartidor != 0)
+                            {
+                                <a href="#" class="text-decoration-none">@transporte.Repartidor.IdRepartidor</a>
+                            }
+                            else
+                            {
+                                <button type="button" id="@transporte.IdTransporte" class="openModalRepartidores btn btn-outline-secondary">Asignar repartidor</button>
+                            }
+                        </div>
+
+                        <button type="button" class="itemModal d-none" data-bs-toggle="modal" data-bs-target="#staticBackdrop"></button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-center">NO HAY DATOS</p>
+}
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Asignar repartidor</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    @Html.HiddenFor(model => model.IdTransporte, new { @id = "txtIdTransporte" })
+                </div>
+                <div class="mb-3">
+                    <label for="ddlRepartidores" class="form-label">Selecciona el repartidor responsable</label>
+                    @Html.DropDownListFor(model => model.Repartidor.IdRepartidor, new SelectList(String.Empty), "Selecciona un repartidor", new { @class = "form-select", @id = "ddlRepartidores" })
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeAssign" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-success" id="formAssign">GUARDAR</button>
+            </div>
+        </div>
+    </div>
 </div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+    $(document).ready(function () {
+        $('.openModalRepartidores').on("click", function () {
+            var idTransporte = $(this).attr("id");
+            $('#txtIdTransporte').val(idTransporte);
+            $(".itemModal").click();
+
+            $('#ddlRepartidores').empty();
+            $('#ddlRepartidores').prepend('<option select></option>');
+            $.ajax({
+                url: '@Url.Action("getRepartidores")',
+                type: 'GET',
+                dataType: 'JSON',
+                success: function (results) {
+                    if (results.Item1) {
+                        $.each(results.Item3, function (i, objResult) {
+                            $('#ddlRepartidores').append('<option value="' + objResult.IdRepartidor + '">' + objResult.Nombre + ' ' + objResult.ApellidoPaterno + ' ' + objResult.ApellidoMaterno + ' (' + objResult.Asignaciones + ')</option>');
+                        });
+                    }
+                    else {
+                        console.log("Error: " + results.Item2);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        $('#formAssign').on("click", function () {
+            if ($('#ddlRepartidores').val().length > 0) {
+                $.ajax({
+                    url: '@Url.Action("SaveAssign")',
+                    type: 'POST',
+                    data: { idTransporte: parseInt($('#txtIdTransporte').val()), idRepartidor: parseInt($('#ddlRepartidores').val()) },
+                    dataType: 'JSON',
+                    success: function (result) {
+                        if (result.Success) {
+                            let divForRepartidor = $('#transporteNumero' + $('#txtIdTransporte').val());
+
+                            $(divForRepartidor).html('<a href="#" class="text-decoration-none">' + $('#txtIdTransporte').val() +'</a>');
+                            console.log(divForRepartidor);
+                            $('#closeAssign').click();
+                        }
+                        else {
+                            console.log("Error: " + result.Message);
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+            else {
+                alert("Para continuar es necesario que eliga una opción");
+            }
+        });
+    });
+</script>

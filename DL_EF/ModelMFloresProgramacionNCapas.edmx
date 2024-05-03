@@ -16,6 +16,7 @@
           <Property Name="FechaUp" Type="date" Nullable="false" />
           <Property Name="FechaDown" Type="date" />
           <Property Name="IdEstatus" Type="int" Nullable="false" />
+          <Property Name="NumeroSeguimiento" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Colonia">
           <Key>
@@ -113,6 +114,7 @@
           <Property Name="Marca" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="AnioFabricacion" Type="date" Nullable="false" />
           <Property Name="IdEstatusTransporte" Type="int" Nullable="false" />
+          <Property Name="IdRepartidor" Type="int" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -218,6 +220,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Transport__IdRep__2739D489">
+          <End Role="Repartidor" Type="Self.Repartidor" Multiplicity="0..1" />
+          <End Role="Transporte" Type="Self.Transporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repartidor">
+              <PropertyRef Name="IdRepartidor" />
+            </Principal>
+            <Dependent Role="Transporte">
+              <PropertyRef Name="IdRepartidor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Usuario__IdRol__34C8D9D1">
           <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -239,6 +253,7 @@
         <Function Name="EstadoGetByIdPais" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdPais" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetRepartidoresWithAsignaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="MunicipioGetByIdEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdEstado" Type="int" Mode="In" />
         </Function>
@@ -416,6 +431,10 @@
             <End Role="EstatusTransporte" EntitySet="EstatusTransporte" />
             <End Role="Transporte" EntitySet="Transporte" />
           </AssociationSet>
+          <AssociationSet Name="FK__Transport__IdRep__2739D489" Association="Self.FK__Transport__IdRep__2739D489">
+            <End Role="Repartidor" EntitySet="Repartidor" />
+            <End Role="Transporte" EntitySet="Transporte" />
+          </AssociationSet>
           <AssociationSet Name="FK__Usuario__IdRol__34C8D9D1" Association="Self.FK__Usuario__IdRol__34C8D9D1">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -449,11 +468,6 @@
             <End Role="Direccion" EntitySet="Direccions" />
           </AssociationSet>
           <EntitySet Name="EstatusTransportes" EntityType="MFloresProgramacionNCapasModel.EstatusTransporte" />
-          <EntitySet Name="Transportes" EntityType="MFloresProgramacionNCapasModel.Transporte" />
-          <AssociationSet Name="FK__Transport__IdEst__5EBF139D" Association="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D">
-            <End Role="EstatusTransporte" EntitySet="EstatusTransportes" />
-            <End Role="Transporte" EntitySet="Transportes" />
-          </AssociationSet>
           <EntitySet Name="Usuarios" EntityType="MFloresProgramacionNCapasModel.Usuario" />
           <AssociationSet Name="FK__Direccion__IdUsu__44FF419A" Association="MFloresProgramacionNCapasModel.FK__Direccion__IdUsu__44FF419A">
             <End Role="Usuario" EntitySet="Usuarios" />
@@ -615,6 +629,16 @@
             <End Role="EstatusAsistencia" EntitySet="EstatusAsistencias" />
             <End Role="Asistencia" EntitySet="Asistencias" />
           </AssociationSet>
+          <EntitySet Name="Transportes" EntityType="MFloresProgramacionNCapasModel.Transporte" />
+          <AssociationSet Name="FK__Transport__IdEst__5EBF139D" Association="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D">
+            <End Role="EstatusTransporte" EntitySet="EstatusTransportes" />
+            <End Role="Transporte" EntitySet="Transportes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Transport__IdRep__2739D489" Association="MFloresProgramacionNCapasModel.FK__Transport__IdRep__2739D489">
+            <End Role="Repartidor" EntitySet="Repartidors" />
+            <End Role="Transporte" EntitySet="Transportes" />
+          </AssociationSet>
+          <FunctionImport Name="GetRepartidoresWithAsignaciones" ReturnType="Collection(MFloresProgramacionNCapasModel.GetRepartidoresWithAsignaciones_Result)" />
           </EntityContainer>
         <EntityType Name="Rol">
           <Key>
@@ -732,30 +756,6 @@
           <Property Name="Estatus" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Transportes" Relationship="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D" FromRole="EstatusTransporte" ToRole="Transporte" />
         </EntityType>
-        <EntityType Name="Transporte">
-          <Key>
-            <PropertyRef Name="IdTransporte" />
-          </Key>
-          <Property Name="IdTransporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NumeroPlaca" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Modelo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="AnioFabricacion" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="IdEstatusTransporte" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EstatusTransporte" Relationship="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D" FromRole="Transporte" ToRole="EstatusTransporte" />
-        </EntityType>
-        <Association Name="FK__Transport__IdEst__5EBF139D">
-          <End Type="MFloresProgramacionNCapasModel.EstatusTransporte" Role="EstatusTransporte" Multiplicity="1" />
-          <End Type="MFloresProgramacionNCapasModel.Transporte" Role="Transporte" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstatusTransporte">
-              <PropertyRef Name="IdEstatus" />
-            </Principal>
-            <Dependent Role="Transporte">
-              <PropertyRef Name="IdEstatusTransporte" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -931,6 +931,7 @@
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ApellidoPaterno" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Transportes" Relationship="MFloresProgramacionNCapasModel.FK__Transport__IdRep__2739D489" FromRole="Repartidor" ToRole="Transporte" />
         </EntityType>
         <ComplexType Name="RepartidorGetAll_Result">
           <Property Type="Int32" Name="IdRepartidor" Nullable="false" />
@@ -962,6 +963,7 @@
           <Property Name="FechaDown" Type="DateTime" Precision="0" />
           <Property Name="IdEstatus" Type="Int32" Nullable="false" />
           <NavigationProperty Name="EstatusAsistencia" Relationship="MFloresProgramacionNCapasModel.FK__Asistenci__IdEst__208CD6FA" FromRole="Asistencia" ToRole="EstatusAsistencia" />
+          <Property Name="NumeroSeguimiento" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="EstatusAsistencia">
           <Key>
@@ -983,6 +985,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Transporte">
+          <Key>
+            <PropertyRef Name="IdTransporte" />
+          </Key>
+          <Property Name="IdTransporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroPlaca" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Modelo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Marca" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="AnioFabricacion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IdEstatusTransporte" Type="Int32" Nullable="false" />
+          <Property Name="IdRepartidor" Type="Int32" />
+          <NavigationProperty Name="EstatusTransporte" Relationship="MFloresProgramacionNCapasModel.FK__Transport__IdEst__5EBF139D" FromRole="Transporte" ToRole="EstatusTransporte" />
+          <NavigationProperty Name="Repartidor" Relationship="MFloresProgramacionNCapasModel.FK__Transport__IdRep__2739D489" FromRole="Transporte" ToRole="Repartidor" />
+        </EntityType>
+        <Association Name="FK__Transport__IdEst__5EBF139D">
+          <End Type="MFloresProgramacionNCapasModel.EstatusTransporte" Role="EstatusTransporte" Multiplicity="1" />
+          <End Type="MFloresProgramacionNCapasModel.Transporte" Role="Transporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstatusTransporte">
+              <PropertyRef Name="IdEstatus" />
+            </Principal>
+            <Dependent Role="Transporte">
+              <PropertyRef Name="IdEstatusTransporte" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Transport__IdRep__2739D489">
+          <End Type="MFloresProgramacionNCapasModel.Repartidor" Role="Repartidor" Multiplicity="0..1" />
+          <End Type="MFloresProgramacionNCapasModel.Transporte" Role="Transporte" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Repartidor">
+              <PropertyRef Name="IdRepartidor" />
+            </Principal>
+            <Dependent Role="Transporte">
+              <PropertyRef Name="IdRepartidor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GetRepartidoresWithAsignaciones_Result">
+          <Property Type="Int32" Name="IdRepartidor" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoPaterno" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="ApellidoMaterno" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Asignaciones" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1050,18 +1097,6 @@
               <MappingFragment StoreEntitySet="EstatusTransporte">
                 <ScalarProperty Name="Estatus" ColumnName="Estatus" />
                 <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Transportes">
-            <EntityTypeMapping TypeName="MFloresProgramacionNCapasModel.Transporte">
-              <MappingFragment StoreEntitySet="Transporte">
-                <ScalarProperty Name="IdEstatusTransporte" ColumnName="IdEstatusTransporte" />
-                <ScalarProperty Name="AnioFabricacion" ColumnName="AnioFabricacion" />
-                <ScalarProperty Name="Marca" ColumnName="Marca" />
-                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
-                <ScalarProperty Name="NumeroPlaca" ColumnName="NumeroPlaca" />
-                <ScalarProperty Name="IdTransporte" ColumnName="IdTransporte" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1308,6 +1343,7 @@
           <EntitySetMapping Name="Asistencias">
             <EntityTypeMapping TypeName="MFloresProgramacionNCapasModel.Asistencia">
               <MappingFragment StoreEntitySet="Asistencia">
+                <ScalarProperty Name="NumeroSeguimiento" ColumnName="NumeroSeguimiento" />
                 <ScalarProperty Name="IdEstatus" ColumnName="IdEstatus" />
                 <ScalarProperty Name="FechaDown" ColumnName="FechaDown" />
                 <ScalarProperty Name="FechaUp" ColumnName="FechaUp" />
@@ -1326,6 +1362,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Transportes">
+            <EntityTypeMapping TypeName="MFloresProgramacionNCapasModel.Transporte">
+              <MappingFragment StoreEntitySet="Transporte">
+                <ScalarProperty Name="IdRepartidor" ColumnName="IdRepartidor" />
+                <ScalarProperty Name="IdEstatusTransporte" ColumnName="IdEstatusTransporte" />
+                <ScalarProperty Name="AnioFabricacion" ColumnName="AnioFabricacion" />
+                <ScalarProperty Name="Marca" ColumnName="Marca" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="NumeroPlaca" ColumnName="NumeroPlaca" />
+                <ScalarProperty Name="IdTransporte" ColumnName="IdTransporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetRepartidoresWithAsignaciones" FunctionName="MFloresProgramacionNCapasModel.Store.GetRepartidoresWithAsignaciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="MFloresProgramacionNCapasModel.GetRepartidoresWithAsignaciones_Result">
+                <ScalarProperty Name="IdRepartidor" ColumnName="IdRepartidor" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="Asignaciones" ColumnName="Asignaciones" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

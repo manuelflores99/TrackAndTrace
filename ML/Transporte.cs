@@ -14,6 +14,7 @@ namespace ML
         public string Marca { get; set; }
         public DateTime AnioFabricacion { get; set; }
         public ML.EstatusTransporte Estatus { get; set; }
+        public ML.Repartidor Repartidor { get; set; }
 
         public List<ML.Transporte> Transportes { get; set; }
     }

@@ -77,6 +77,9 @@
     <Compile Include="EstatusTransporte.cs">
       <DependentUpon>ModelMFloresProgramacionNCapas.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetRepartidoresWithAsignaciones_Result.cs">
+      <DependentUpon>ModelMFloresProgramacionNCapas.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelMFloresProgramacionNCapas.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

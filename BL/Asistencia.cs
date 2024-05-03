@@ -15,11 +15,11 @@ namespace BL
             {
                 using (SqlConnection context = new SqlConnection(DL.Conexion.Get()))
                 {
-                    string query = "INSERT INTO Asistencia (Email, Titulo, Mensaje, IdEstatus) VALUES(@Email, @Titulo, @Mensaje, @IdEstatus)";
+                    string query = "INSERT INTO Asistencia (Email, Titulo, Mensaje, IdEstatus, NumeroSeguimiento) VALUES(@Email, @Titulo, @Mensaje, @IdEstatus, @NumeroSeguimiento)";
 
                     SqlCommand cmd = new SqlCommand(query, context);
 
-                    SqlParameter[] parameters = new SqlParameter[4];
+                    SqlParameter[] parameters = new SqlParameter[5];
                     parameters[0] = new SqlParameter("Email", System.Data.SqlDbType.VarChar);
                     parameters[0].Value = asistencia.Email;
 
@@ -31,6 +31,8 @@ namespace BL
 
                     parameters[3] = new SqlParameter("IdEstatus", System.Data.SqlDbType.Int);
                     parameters[3].Value = asistencia.Estatus.IdEstatus;
+                    parameters[4] = new SqlParameter("NumeroSeguimiento", System.Data.SqlDbType.VarChar);
+                    parameters[4].Value = asistencia.NumeroSeguimiento;
 
                     cmd.Parameters.AddRange(parameters);
 

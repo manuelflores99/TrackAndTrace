@@ -34,12 +34,12 @@ namespace DL_EF
         public virtual DbSet<Direccion> Direccions { get; set; }
         public virtual DbSet<Colonia> Colonias { get; set; }
         public virtual DbSet<EstatusTransporte> EstatusTransportes { get; set; }
-        public virtual DbSet<Transporte> Transportes { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
         public virtual DbSet<Paquete> Paquetes { get; set; }
         public virtual DbSet<Repartidor> Repartidors { get; set; }
         public virtual DbSet<Asistencia> Asistencias { get; set; }
         public virtual DbSet<EstatusAsistencia> EstatusAsistencias { get; set; }
+        public virtual DbSet<Transporte> Transportes { get; set; }
     
         public virtual ObjectResult<ColoniaGetById_Result> ColoniaGetById(Nullable<int> idColonia)
         {
@@ -550,6 +550,11 @@ namespace DL_EF
                 new ObjectParameter("email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UsuarioGetByEmail_Result>("UsuarioGetByEmail", emailParameter);
+        }
+    
+        public virtual ObjectResult<GetRepartidoresWithAsignaciones_Result> GetRepartidoresWithAsignaciones()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetRepartidoresWithAsignaciones_Result>("GetRepartidoresWithAsignaciones");
         }
     }
 }

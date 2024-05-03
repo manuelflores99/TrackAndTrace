@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ML
 {
-    public class Repartidor
+    public partial class Repartidor
     {
         public int IdRepartidor { get; set; }
         public string Nombre { get; set; }
@@ -14,5 +14,9 @@ namespace ML
         public string ApellidoMaterno { get; set; }
 
         public List<ML.Repartidor> Repartidores { get; set; }
+    }
+    public partial class Repartidor
+    {
+        public int? Asignaciones { get; set; }
     }
 }

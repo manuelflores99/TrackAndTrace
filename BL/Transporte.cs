@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Core.Mapping;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -16,6 +17,8 @@ namespace BL
                 {
                     var query = (from transporte in context.Transportes
                                  join estatus in context.EstatusTransportes on transporte.IdEstatusTransporte equals estatus.IdEstatus
+                                 join repartidor in context.Repartidors on transporte.IdRepartidor equals repartidor.IdRepartidor into repartidorJoin
+                                 from repartidor in repartidorJoin.DefaultIfEmpty()
                                  select new
                                  {
                                      IdTransporte = transporte.IdTransporte,
@@ -24,7 +27,11 @@ namespace BL
                                      Marca = transporte.Marca,
                                      AnioFabricacion = transporte.AnioFabricacion,
                                      IdEstatus = transporte.IdEstatusTransporte,
-                                     Estatus = estatus.Estatus
+                                     Estatus = estatus.Estatus,
+                                     IdRepartidor = repartidor != null ? repartidor.IdRepartidor : 0,
+                                     NombreRepartidor = repartidor.Nombre,
+                                     ApellidoPaternoRepartidor = repartidor.ApellidoPaterno,
+                                     ApellidoMaternoRepartidor = repartidor.ApellidoMaterno,
                                  }
                                 ).ToList();
 
@@ -43,6 +50,11 @@ namespace BL
                             rowTransporte.Estatus = new ML.EstatusTransporte();
                             rowTransporte.Estatus.IdEstatus = columnTransporte.IdEstatus;
                             rowTransporte.Estatus.Estatus = columnTransporte.Estatus;
+                            rowTransporte.Repartidor = new ML.Repartidor();
+                            rowTransporte.Repartidor.IdRepartidor = columnTransporte.IdRepartidor;
+                            rowTransporte.Repartidor.Nombre = columnTransporte.NombreRepartidor;
+                            rowTransporte.Repartidor.ApellidoPaterno = columnTransporte.ApellidoPaternoRepartidor;
+                            rowTransporte.Repartidor.ApellidoMaterno = columnTransporte.ApellidoMaternoRepartidor;
 
                             listTransporte.Transportes.Add(rowTransporte);
                         }
@@ -179,6 +191,117 @@ namespace BL
                     else
                     {
                         return (false, "No se ejecuto la consulta", null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, ex);
+            }
+        }
+
+        public static (bool Success, string Message, Exception Error) AssignRepartidor(ML.Transporte transporte)
+        {
+            try
+            {
+                using(SqlConnection context = new SqlConnection(DL.Conexion.Get()))
+                {
+                    string query = "UPDATE Transporte SET IdRepartidor = @IdRepartidor WHERE IdTransporte = @IdTransporte";
+
+                    SqlCommand cmd = new SqlCommand(query, context);
+
+                    SqlParameter parameter = new SqlParameter("IdTransporte", System.Data.SqlDbType.Int);
+
+                    cmd.Parameters.Add(parameter);
+
+                    cmd.Connection.Open();
+
+                    int rowAffected = cmd.ExecuteNonQuery();
+
+                    if(rowAffected > 0)
+                    {
+                        return (true, null, null);
+                    }
+                    else
+                    {
+                        return (false, "Error al realizar la consulta", null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, ex);
+            }
+        }
+
+        public static (bool Success, string Message, List<ML.Repartidor>, Exception Error) GetRepartidoresWithAsignaciones()
+        {
+            try
+            {
+                using(DL_EF.MFloresProgramacionNCapasEntities context = new DL_EF.MFloresProgramacionNCapasEntities())
+                {
+                    var result = context.GetRepartidoresWithAsignaciones().ToList();
+
+                    if (result.Count > 0)
+                    {
+                        List<ML.Repartidor> repartidores = new List<ML.Repartidor>();
+
+                        foreach(var item in result)
+                        {
+                            ML.Repartidor repartidor = new ML.Repartidor
+                            {
+                                IdRepartidor = item.IdRepartidor,
+                                Nombre = item.Nombre,
+                                ApellidoPaterno = item.ApellidoPaterno,
+                                ApellidoMaterno = item.ApellidoMaterno,
+                                Asignaciones = item.Asignaciones.Value
+                                
+                            };
+
+                            repartidores.Add(repartidor);
+                        }
+
+                        return (true, null, repartidores, null);
+                    }
+                    else
+                    {
+                        return (false, "No hay registros", null, null);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, null, ex);
+            }
+        }
+
+        public static (bool Success, string Message, Exception Error) SaveAssign(int idTransporte, int idRepartidor)
+        {
+            try
+            {
+                using (SqlConnection context = new SqlConnection(DL.Conexion.Get()))
+                {
+                    string query = "TransporteAssignRepartidor";
+
+                    SqlCommand cmd = new SqlCommand(query, context);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter[] parameters = new SqlParameter[2];
+                    parameters[0] = new SqlParameter("IdTransporte", idTransporte);
+                    parameters[1] = new SqlParameter("IdRepartidor", idRepartidor);
+                    cmd.Parameters.AddRange(parameters);
+
+                    cmd.Connection.Open();
+
+                    int rowAffected = cmd.ExecuteNonQuery();
+
+                    if(rowAffected > 0)
+                    {
+                        return (true, null, null);
+                    }
+                    else
+                    {
+                        return (false, "No se realizo la asdignación", null);
                     }
                 }
             }

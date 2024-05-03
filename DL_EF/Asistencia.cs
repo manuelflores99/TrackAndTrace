@@ -21,6 +21,7 @@ namespace DL_EF
         public System.DateTime FechaUp { get; set; }
         public Nullable<System.DateTime> FechaDown { get; set; }
         public int IdEstatus { get; set; }
+        public string NumeroSeguimiento { get; set; }
     
         public virtual EstatusAsistencia EstatusAsistencia { get; set; }
     }

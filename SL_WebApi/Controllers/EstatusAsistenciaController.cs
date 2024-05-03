@@ -19,7 +19,7 @@ namespace SL_WebApi.Controllers
             if (getEstados.Success)
             {
                 Result result = new Result();
-                result.Correct = getEstados.Success;
+                result.Success = getEstados.Success;
                 result.Data = getEstados.Estatus;
                 return Ok(result);
             }
